@@ -6,8 +6,19 @@ Servo-controlled Balance Plate using Arduino / STM32
  - The servos are connected to the controller so that the near-left servo connects to the front-most socket, and the servo at the back-right connects to the socket closer to the PS2 connector. Both are connected so that the ground wire is closest to the outside edge of the board, then power in the middle, and signal line on the inside. (CAUTION: the servo extension lead supplied with mine had wires in a different order from the servo itself!)
 
 ## Method of Operation
-The control unit has an ON/OFF switch, a RESET button, and a USER button. Input is via a PS2-style joypad. 
-There are two LEDs (Red LED L1 and Blue LED L1), both of which will light solid while the unit is on.
+ - The control unit has an ON/OFF switch, a RESET button, and a USER button. Input is via a PS2-style joypad. 
+ - There are two LEDs (Red LED L1 and Blue LED L1), both of which will light solid while the unit is on.
+ - Pressing USER button toggles the servo outputs on/off. 
+ - The plate is controlled by a PS2 controller:
+   * Left Analog Stick : Move target point
+   * Buttons : Trace shape
+ - To adjust the PID parameters, hold the Right Analog Stick and then simulataneusly press any direction on the D-Pad
+   * Right Analog Stick X left/right : Decrease/Increase KP
+   * Right Analog Stick Y down/up : Decrease/Increase KD
+
+
+
+## Display
 OLED readout shows values as follows:
  - Servo state (on / off)
  - Keycode of any PS2 buttons currently pressed
@@ -16,13 +27,10 @@ OLED readout shows values as follows:
  - KP, KD PID control values
  - Target X/Y (left hand side)
  - Measured X/Y (right hand side)
+
 ![](OLED_output.png)
 
-Pressing USER button toggles the servo outputs on/off. 
 
-The plate is controlled by a PS2 controller:
- - Analog Stick : Move target point
- - Buttons : Trace shape
 
 ## Code Structure
  - The main() program loop is contained in USER\MiniBalance.c, but you'll find it quite sparse - it begins by initialising all the hardware and then enters an infinite while() loop whose only function appears to be to update the display.
